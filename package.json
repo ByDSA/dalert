@@ -1,14 +1,28 @@
 {
-  "name": "dalert",
+  "name": "@ByDSA/dalert",
   "version": "0.0.1",
-  "description": "",
+  "description": "A library for sending alerts based on actions (upon completion, on error, etc.). It is configurable, allows setting triggers (conditions based on actions to decide whether to send an alert), and supports mailing.",
   "license": "ISC",
-  "author": "",
+  "author": "Dani Sales",
+  "contributors": [
+    {
+      "name": "Daniel Sales",
+      "email": "danisales.es@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByDSA/dalert.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ByDSA/dalert/issues"
+  },
   "main": "build/index.js",
   "scripts": {
     "build": "pnpm build:clean && pnpm build:raw",
     "build:clean": "rm -rf build",
     "build:raw": "tsc -p tsconfig-build.json",
+    "publish:afterBuild": "lib/publish_afterBuild.sh",
     "test": "NODE_ENV=test jest --maxWorkers=1"
   },
   "dependencies": {
@@ -19,7 +33,7 @@
     "@types/jest": "29.5.14",
     "@types/node": "22.10.7",
     "@types/nodemailer": "6.4.17",
-    "daproj": "/home/prog/git/danisales/mcenter/packages/lib/daproj",
+    "daproj": "github:ByDSA/daproj",
     "eslint": "9.19.0",
     "jest": "29.7.0",
     "prettier": "3.4.2",
@@ -29,5 +43,8 @@
     "ts-node": "10.9.2",
     "typescript": "5.7.3"
   },
-  "keywords": []
+  "keywords": [],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }

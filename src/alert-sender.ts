@@ -10,12 +10,17 @@ export function createMailSender<I, O>(
 ): AlertSender<I, O> {
   return async (inputData: I, outputData: O): Promise<void> => {
     const props = f(inputData, outputData);
+    const text = "Input data:"
+        + JSON.stringify(inputData, null, 2)
+        + "\nOutput data:"
+        + JSON.stringify(outputData, null, 2);
 
     await sendMail( {
       subject: "Dalarm",
       html: "<pre>"
-        + JSON.stringify(outputData, null, 2)
+        + text
         + "</pre>",
+      text,
       ...props,
     } );
   };

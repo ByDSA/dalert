@@ -1,0 +1,22 @@
+# sources
+tsconfig*.json
+src/
+
+# tests
+jest.config.js
+*spec.js
+
+# dev
+node_modules/
+coverage/
+docs/
+./typedoc.json
+.husky/
+.github/
+.eslintrc.*
+.commitlintrc.*
+.prettierignore
+
+# keys
+.env
+.env.*
