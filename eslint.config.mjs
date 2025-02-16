@@ -1,7 +1,7 @@
 // @ts-check
 
 import { Dependencies } from "daproj";
-import { generateConfigs } from "daproj/eslint";
+import { generateConfigs } from "daproj/eslint/index.mjs";
 
 const generatedConfigs = generateConfigs( {
   [Dependencies.Jest]: true,

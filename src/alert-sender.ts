@@ -6,14 +6,22 @@ export function onErrorSendMail<I>(inputData: I, e: Error) {
 }
 
 export function createMailSender<I, O>(
-  f: (i: I, o: O)=> Partial<Parameters<typeof sendMail>[0]>,
+  f: (i: I, o?: O)=> Partial<Parameters<typeof sendMail>[0]>,
 ): AlertSender<I, O> {
-  return async (inputData: I, outputData: O): Promise<void> => {
+  return async (inputData: I, outputData?: O, errors?: Error[]): Promise<void> => {
     const props = f(inputData, outputData);
-    const text = "Input data:"
-        + JSON.stringify(inputData, null, 2)
-        + "\nOutput data:"
+    let text = "Input data:"
+        + JSON.stringify(inputData, null, 2);
+
+    if (outputData) {
+      text += "\nOutput data:"
         + JSON.stringify(outputData, null, 2);
+    }
+
+    if (errors && errors.length > 0) {
+      text += "\nErrors:"
+          + JSON.stringify(errors.map(e=>e.toString()), null, 2);
+    }
 
     await sendMail( {
       subject: "Dalarm",
