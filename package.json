@@ -1,6 +1,6 @@
 {
   "name": "@ByDSA/dalert",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library for sending alerts based on actions (upon completion, on error, etc.). It is configurable, allows setting triggers (conditions based on actions to decide whether to send an alert), and supports mailing.",
   "license": "ISC",
   "author": "Dani Sales",
