@@ -1,5 +1,5 @@
 import { sendMailError, sendMail } from "./mails";
-import { AlertSender } from "./process";
+import type { AlertSender } from "./process";
 
 export function onErrorSendMail<I>(inputData: I, e: Error) {
   return sendMailError(e, inputData);

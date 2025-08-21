@@ -9,17 +9,35 @@ type ProcessProps<I, O> = {
   trigger?: (inputData: I, outputData: O)=> boolean;
   sendAlert: AlertSender<I, O>;
   onError?: (e: Error, inputData: I)=> Promise<void>;
+  retry?: {
+    maxTries: number;
+  };
 };
 export function newProcess<I, O>( { action,
   showInfo = console.log,
   trigger,
   sendAlert = createMailSender(()=>( {} )),
-  onError }: ProcessProps<I, O>): (inputData: I)=> Promise<O | null> {
+  onError,
+  retry }: ProcessProps<I, O>): (inputData: I)=> Promise<O | null> {
   return async (inputData: I) => {
     let outputData: O | null = null;
+    const maxTries = retry?.maxTries ?? 3;
+    let error: unknown | undefined;
+
+    for (let i = 0; i < maxTries; i++) {
+      try {
+        outputData = await action(inputData);
+      } catch (e) {
+        error = e;
+      }
+    }
 
     try {
-      outputData = await action(inputData);
+      if (error)
+        throw error;
+
+      if (!outputData)
+        throw new Error("Output data is null or undefined");
 
       showInfo?.(outputData);
 
